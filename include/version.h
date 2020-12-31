@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  This file is automatically modified by the build_version.py script
  to update the BUILD and BUILD_DATE values based on the
@@ -16,7 +15,6 @@
 #define FN_VERSION_DATE "2020-12-30 23:08:44"
 
 #define FN_VERSION_FULL "0.5.829ab4ca"
-=======
 /*
  This file is automatically modified by the build_version.py script
  to update the BUILD and BUILD_DATE values based on the
@@ -34,4 +32,3 @@
 #define FN_VERSION_DATE "2020-12-29 01:50:02"
 
 #define FN_VERSION_FULL "0.5.89f318f9"
->>>>>>> f9aa28aa56f73f6f0f3ccc25b62a04a6179054da
