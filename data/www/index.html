@@ -199,7 +199,7 @@
 		}
 		#txt_hostname
 		{
-		    text-align: right;
+			text-align: right;
 		}
 	</style>
 </head>
@@ -207,7 +207,7 @@
 <body>
 	<div class="header">
 		<div class="headerlogo">
-			<a href="https://github.com/FujiNetWIFI/fujinet-platformio">
+			<a href="https://fujinet.online/">
 				<svg width="100%" height="100%" viewBox="0 0 594 189" version="1.1" xmlns="http://www.w3.org/2000/svg"
 					xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/"
 					style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
@@ -283,10 +283,10 @@
 				<div class="detline alt">
 					<div class="deth">Host name</div>
 					<div class="det">
-					  <form action="/config" method="post">
-					    <input type="text" name="hostname" id="txt_hostname" value="<%FN_HOSTNAME%>" />
-					    <input type="submit" value="Save">
-					  </form>
+						<form action="/config" method="post">
+							<input type="text" name="hostname" id="txt_hostname" value="<%FN_HOSTNAME%>" />
+							<input type="submit" value="Save">
+						</form>
 					</div>
 				</div>
 				<div class="detline">
@@ -380,9 +380,83 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="flexparent">
 			<div class="flexchild">
-				<header><span id="logowob"></span>PRINTER</header>
+				<header>HOSTS<span id="logowob"></span>LIST</header>
+				<div class="detline">
+					<div class="deth">Host 1</div>
+					<div class="det"><%FN_HOST1%></div>
+				</div>
+				<div class="detline alt">
+					<div class="deth">Host 2</div>
+					<div class="det"><%FN_HOST2%></div>
+				</div>
+				<div class="detline">
+					<div class="deth">Host 3</div>
+					<div class="det"><%FN_HOST3%></div>
+				</div>
+				<div class="detline alt">
+					<div class="deth">Host 4</div>
+					<div class="det"><%FN_HOST4%></div>
+				</div>
+				<div class="detline">
+					<div class="deth">Host 5</div>
+					<div class="det"><%FN_HOST5%></div>
+				</div>
+				<div class="detline alt">
+					<div class="deth">Host 6</div>
+					<div class="det"><%FN_HOST6%></div>
+				</div>
+				<div class="detline">
+					<div class="deth">Host 7</div>
+					<div class="det"><%FN_HOST7%></div>
+				</div>
+				<div class="detline alt">
+					<div class="deth">Host 8</div>
+					<div class="det"><%FN_HOST8%></div>
+				</div>
+			</div>
+			<div class="flexchild">
+				<header>MOUNT<span id="logowob"></span>LIST</header>
+				<div class="detline">
+					<div class="deth">Drive Slot 1<%FN_DRIVE1DEVICE%></div>
+					<div class="det"><%FN_DRIVE1HOST%> :: <%FN_DRIVE1MOUNT%></div>
+				</div>
+				<div class="detline alt">
+					<div class="deth">Drive Slot 2<%FN_DRIVE2DEVICE%></div>
+					<div class="det"><%FN_DRIVE2HOST%> :: <%FN_DRIVE2MOUNT%></div>
+				</div>
+				<div class="detline">
+					<div class="deth">Drive Slot 3<%FN_DRIVE3DEVICE%></div>
+					<div class="det"><%FN_DRIVE3HOST%> :: <%FN_DRIVE3MOUNT%></div>
+				</div>
+				<div class="detline alt">
+					<div class="deth">Drive Slot 4<%FN_DRIVE4DEVICE%></div>
+					<div class="det"><%FN_DRIVE4HOST%> :: <%FN_DRIVE4MOUNT%></div>
+				</div>
+				<div class="detline">
+					<div class="deth">Drive Slot 5<%FN_DRIVE5DEVICE%></div>
+					<div class="det"><%FN_DRIVE5HOST%> :: <%FN_DRIVE5MOUNT%></div>
+				</div>
+				<div class="detline alt">
+					<div class="deth">Drive Slot 6<%FN_DRIVE6DEVICE%></div>
+					<div class="det"><%FN_DRIVE6HOST%> :: <%FN_DRIVE6MOUNT%></div>
+				</div>
+				<div class="detline">
+					<div class="deth">Drive Slot 7<%FN_DRIVE7DEVICE%></div>
+					<div class="det"><%FN_DRIVE7HOST%> :: <%FN_DRIVE7MOUNT%></div>
+				</div>
+				<div class="detline alt">
+					<div class="deth">Drive Slot 8<%FN_DRIVE8DEVICE%></div>
+					<div class="det"><%FN_DRIVE8HOST%> :: <%FN_DRIVE8MOUNT%></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="flexparent">
+			<div class="flexchild">
+				<header>PRINTER<span id="logowob"></span>SETTINGS</header>
 				<div class="detline">
 					<div class="cicon">
 						<div class="svgicon">
@@ -496,7 +570,7 @@
 				</div>
 			</div>
 			<div class="flexchild">
-				<header><span id="logowob"></span>HSIO</header>
+				<header>HSIO<span id="logowob"></span>SETTINGS</header>
 				<div class="detline">
 					<div class="cicon">
 						<div class="svgicon">
@@ -629,7 +703,7 @@
 								</select>
 								<input type="text" name="timezone" id="txt_timezone" value="<%FN_TIMEZONE%>">
 								<input type="submit" value="Save">
-								<a href="https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html">?</a>
+								<a href="https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html" target="_new">?</a>
 							</form>
 						</div>
 					</div>
@@ -670,7 +744,7 @@
 				</div>
 			</div>
 			<div class="flexchild">
-				<header><span id="logowob"></span>PROGRAM RECORDER</header>
+				<header>PROGRAM<span id="logowob"></span>RECORDER</header>
 				<div class="detline">
 					<div class="cicon">
 						<div class="svgicon">
@@ -720,7 +794,7 @@
 				</div>
 			</div>
 			<div class="flexchild">
-				<header><span id="logowob"></span>DISK SWAP</header>
+				<header>DISK<span id="logowob"></span>SWAP</header>
 				<div class="detline">
 					<div class="cicon">
 						<div class="svgicon">
@@ -809,7 +883,7 @@
 				</div>
 			</div>
 			<div class="flexchild">
-				<header><span id="logowob"></span>MISC</header>
+				<header>BOOT<span id="logowob"></span>SETTINGS</header>
 				<div class="detline">
 					<div class="cicon">
 						<div class="svgicon">
