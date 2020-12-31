@@ -9,8 +9,10 @@
 #define PIN_PROC 22
 #define PIN_CKO 32
 #define PIN_CKI 27
-#define PIN_MTR 36
-#define PIN_CMD 39
+//#define PIN_MTR 36
+//#define PIN_CMD 39
+#define PIN_MTR 23
+#define PIN_CMD 35
 
 #define DELAY_T4 850
 #define DELAY_T5 250

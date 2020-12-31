@@ -1,5 +1,6 @@
 
 #include <string.h>
+#include <algorithm>
 #include <lwip/netdb.h>
 
 #include "../../include/atascii.h"
@@ -1006,6 +1007,22 @@ void sioModem::at_handle_dial()
     }
 
     Debug_printf("DIALING: %s\n", host.c_str());
+
+    vector<string> PhoneNums{"1231231234","123","000"};
+    vector<string> MyHosts{"ukbbs.zap.to", "rainmaker.wunderground.com", "stargate.synchro.net"};
+    vector<string> MyPorts{"128","23","23"};
+
+    /*Check first if the only numeric host*/
+    if (host.find_first_not_of("0123456789") == std::string::npos)
+    {
+        ptrdiff_t mypos=find(PhoneNums.begin(), PhoneNums.end(), host) - PhoneNums.begin();
+        if(mypos < PhoneNums.size())
+        {
+                host = MyHosts.at(mypos);
+                port = MyPorts.at(mypos);
+        }
+    }
+
 
     if (host == "5551234") // Fake it for BobTerm
     {

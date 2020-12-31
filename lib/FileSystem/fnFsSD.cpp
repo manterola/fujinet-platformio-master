@@ -14,10 +14,14 @@
 #include "../utils/utils.h"
 #include "../../include/debug.h"
 
-#define SD_HOST_CS GPIO_NUM_5
-#define SD_HOST_MISO GPIO_NUM_19
-#define SD_HOST_MOSI GPIO_NUM_23
-#define SD_HOST_SCK GPIO_NUM_18
+//#define SD_HOST_CS GPIO_NUM_5
+//#define SD_HOST_MISO GPIO_NUM_19
+//#define SD_HOST_MOSI GPIO_NUM_23
+//#define SD_HOST_SCK GPIO_NUM_18
+#define SD_HOST_CS GPIO_NUM_13
+#define SD_HOST_MISO GPIO_NUM_2
+#define SD_HOST_MOSI GPIO_NUM_15
+#define SD_HOST_SCK GPIO_NUM_14
 
 // Our global SD interface
 FileSystemSDFAT fnSDFAT;
