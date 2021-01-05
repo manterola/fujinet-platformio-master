@@ -121,6 +121,9 @@ private:
         AT_TERMVT100,
         AT_TERMDUMB,
         AT_TERMANSI,
+        AT_PHONEBOOKLIST,
+        AT_PHONEBOOKCLR,
+        AT_PHONEBOOK,
         AT_ENUMCOUNT};
 
     uint modemBaud = 2400; // Holds modem baud rate, Default 2400
@@ -163,6 +166,9 @@ private:
     string term_type;               // telnet terminal type.
     ESP32SSHCLIENT ssh;             // ssh instance.
 
+    //typedef std::vector<std::string> StringArray;
+    //std::vector<StringArray> phonebook(3);  
+
     void sio_send_firmware(uint8_t loadcommand); // $21 and $26: Booter/Relocator download; Handler download
     void sio_poll_1();                           // $3F, '?', Type 1 Poll
     void sio_poll_3(uint8_t device, uint8_t aux1, uint8_t aux2); // $40, '@', Type 3 Poll
@@ -198,6 +204,10 @@ private:
     void at_handle_help();
     void at_handle_get();
     void at_handle_port();
+    void at_handle_pblist();
+    void at_handle_pb();
+    void at_handle_pbclear();
+
 
 protected:
     void shutdown() override;

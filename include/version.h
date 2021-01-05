@@ -10,11 +10,11 @@
 #define FN_VERSION_MAJOR 0
 #define FN_VERSION_MINOR 5
 
-#define FN_VERSION_BUILD "829ab4ca"
+#define FN_VERSION_BUILD "d8d46a1a"
 
-#define FN_VERSION_DATE "2020-12-30 23:08:44"
+#define FN_VERSION_DATE "2021-01-04 23:34:00"
 
-#define FN_VERSION_FULL "0.5.829ab4ca"
+#define FN_VERSION_FULL "0.5.d8d46a1a"
 /*
  This file is automatically modified by the build_version.py script
  to update the BUILD and BUILD_DATE values based on the
@@ -27,8 +27,8 @@
 #define FN_VERSION_MAJOR 0
 #define FN_VERSION_MINOR 5
 
-#define FN_VERSION_BUILD "89f318f9"
+#define FN_VERSION_BUILD "d8d46a1a"
 
-#define FN_VERSION_DATE "2020-12-29 01:50:02"
+#define FN_VERSION_DATE "2021-01-04 23:34:00"
 
-#define FN_VERSION_FULL "0.5.89f318f9"
+#define FN_VERSION_FULL "0.5.d8d46a1a"

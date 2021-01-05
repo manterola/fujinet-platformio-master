@@ -1,6 +1,6 @@
 
 #include <string.h>
-#include <algorithm>
+//#include <algorithm> i think it is not needed anymore
 #include <lwip/netdb.h>
 
 #include "../../include/atascii.h"
@@ -10,6 +10,7 @@
 #include "fnFsSPIF.h"
 #include "fnSystem.h"
 #include "../utils/utils.h"
+#include "fnConfig.h"
 
 #define RECVBUFSIZE 1024
 
@@ -98,6 +99,9 @@ sioModem::sioModem(FileSystem *_fs, bool snifferEnable)
     modemSniffer = new ModemSniffer(activeFS, snifferEnable);
     set_term_type("dumb");
     telnet = telnet_init(telopts, _telnet_event_handler, 0, this);
+
+    //This section populate phonebook (with data from the config file)
+//    phonebook[]
 }
 
 sioModem::~sioModem()
@@ -1027,6 +1031,7 @@ void sioModem::at_handle_dial()
 {
     int portIndex = cmd.find(':');
     std::string host, port;
+    std::string hostpb;
     if (portIndex != std::string::npos)
     {
         host = cmd.substr(4, portIndex - 4);
@@ -1042,21 +1047,17 @@ void sioModem::at_handle_dial()
 
     Debug_printf("DIALING: %s\n", host.c_str());
 
-    vector<string> PhoneNums{"1231231234","123","000"};
-    vector<string> MyHosts{"ukbbs.zap.to", "rainmaker.wunderground.com", "stargate.synchro.net"};
-    vector<string> MyPorts{"128","23","23"};
-
     /*Check first if the only numeric host*/
     if (host.find_first_not_of("0123456789") == std::string::npos)
     {
-        ptrdiff_t mypos=find(PhoneNums.begin(), PhoneNums.end(), host) - PhoneNums.begin();
-        if(mypos < PhoneNums.size())
+        hostpb = Config.get_pb_host_name(host.c_str());
+        /*Check if the number is in the phonebook*/
+        if (!hostpb.empty())
         {
-                host = MyHosts.at(mypos);
-                port = MyPorts.at(mypos);
+            port = Config.get_pb_host_port(host.c_str());
+            host = hostpb;
         }
     }
-
 
     if (host == "5551234") // Fake it for BobTerm
     {
@@ -1120,6 +1121,98 @@ void sioModem::at_handle_dial()
         }
     }
 }
+/*Following functions manage the phonebook*/
+/*Display current Phonebook*/
+void sioModem::at_handle_pblist()
+{
+    at_cmd_println();
+    at_cmd_println("Phone#       Host");
+    for (int i = 0; i < MAX_PB_SLOTS; ++i)
+    {
+        // Check if empty
+        std::string pbEntry = Config.get_pb_entry(i);
+        if (!pbEntry.empty())
+            at_cmd_println(pbEntry);
+    }
+    at_cmd_println();
+
+    if (numericResultCode == true)
+        at_cmd_resultCode(RESULT_CODE_OK);
+    else
+        at_cmd_println("OK");
+}
+
+/*Add and del entry in the phonebook*/
+void sioModem::at_handle_pb()
+{
+    // From the AT command get the info to add. Ex: atpb4321=irata.online:8002 
+    //or delete ex: atpb4321
+    // ("ATPB" length 4)
+    std::string phnumber, host, port;
+    int hostIndex = cmd.find('=');
+    int portIndex = cmd.find(':');
+    
+    //Equal symbol, so assume adding entry
+    if (hostIndex != std::string::npos)
+    {
+        phnumber = cmd.substr(4, hostIndex-4);
+        //Check pure numbers entry
+        if (phnumber.find_first_not_of("0123456789") == std::string::npos)
+        {
+            if (portIndex != std::string::npos)
+            {
+                host = cmd.substr(hostIndex+1,portIndex-hostIndex-1);
+                port = cmd.substr(portIndex+1);
+            }
+            else
+            {
+                host = cmd.substr(hostIndex+1);
+		        port = "23";
+            }
+            if (Config.add_pb_number(phnumber.c_str(), host.c_str(), port.c_str()))
+            {
+                if (numericResultCode == true)
+                    at_cmd_resultCode(RESULT_CODE_OK);
+                else
+                    at_cmd_println("OK");
+            }
+            else
+            {
+                if (numericResultCode == true)
+                    at_cmd_resultCode(RESULT_CODE_ERROR);
+                else
+                    at_cmd_println("ERROR");     
+            }
+        }
+        else
+        {
+            if (numericResultCode == true)
+                at_cmd_resultCode(RESULT_CODE_ERROR);
+            else
+                at_cmd_println("ERROR");
+        }
+    }
+    //Delete an entry    
+    else
+    {
+        std::string phnumber = cmd.substr(4);
+        if (Config.del_pb_number(phnumber.c_str()))
+        {
+            if (numericResultCode == true)
+                at_cmd_resultCode(RESULT_CODE_OK);
+            else
+                at_cmd_println("OK");
+        }
+        else
+        {
+            if (numericResultCode == true)
+                at_cmd_resultCode(RESULT_CODE_ERROR);
+            else
+                at_cmd_println("ERROR");     
+        } 
+    }
+}
+
 /*
    Perform a command given in AT Modem command mode
 */
@@ -1170,7 +1263,10 @@ void sioModem::modemCommand()
             "AT+TERM=VT52",
             "AT+TERM=VT100",
             "AT+TERM=ANSI",
-            "AT+TERM=DUMB"};
+            "AT+TERM=DUMB",
+            "ATPBLIST",
+            "ATPBCLEAR",
+            "ATPB"};
 
     //cmd.trim();
     util_string_trim(cmd);
@@ -1394,6 +1490,19 @@ void sioModem::modemCommand()
             at_cmd_resultCode(RESULT_CODE_OK);
         else
             at_cmd_println("OK");
+        break;
+    case AT_PHONEBOOKLIST:
+        at_handle_pblist();
+        break;
+    case AT_PHONEBOOK:
+        at_handle_pb();
+        break;
+    case AT_PHONEBOOKCLR:
+        Config.clear_pb();
+        if (numericResultCode == true)
+            at_cmd_resultCode(RESULT_CODE_OK);
+        else
+            at_cmd_println("OK");       
         break;
     default:
         if (numericResultCode == true)
